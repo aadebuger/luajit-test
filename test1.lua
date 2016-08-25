@@ -4,3 +4,13 @@ local m_package_path = package.path
         p, p, m_package_path)
 mongol = require "resty-mongol"
     conn = mongol() -- return a connection object
+ok,err = conn:connect("172.17.0.4", 27017)
+if not ok then
+            print("connect failed: "..err)
+        end
+
+        local db = conn:new_db_handle ( "test" )
+        col = db:get_col("test")
+
+        r = col:find_one({name="dog"})
+        print(r["name"])
